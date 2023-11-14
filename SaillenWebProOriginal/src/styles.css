@@ -140,59 +140,45 @@ section {
 
 
 body {
-    background-image: url(templates/iconoSaillen.png);
-    background-size: 30%; /* Cambiado a "cover" para ajustar la imagen a todo el fondo */
+    background-image: url(/templates/nuevo_icon.SVG.png);
+    background-size: 35%;
+    /* Cambiado a "cover" para ajustar la imagen a todo el fondo */
     background-repeat: no-repeat;
-    background-position: center top; /* Centrar la imagen en el fondo */
-    margin: 0; /* Eliminar márgenes predeterminados */
+    background-position: center top;
+    /* Centrar la imagen en el fondo */
+    margin: 0;
+    /* Eliminar márgenes predeterminados */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
 }
+
 /* Resto del CSS sin cambios */
 
 /* Estilo para el h1 */
 h1 {
-    font-family: 'Arial', sans-serif; /* Tipo de fuente */
-    font-size: 2.5rem; /* Ajustado a un tamaño más grande */
-    color: #333; /* Color del texto */
-    text-align: center; /* Alineación del texto al centro */
-    margin-bottom: 20px; /* Márgenes inferiores */
+    font-family: 'Arial', sans-serif;
+    /* Tipo de fuente */
+    font-size: 2.5rem;
+    /* Ajustado a un tamaño más grande */
+    color: #333;
+    /* Color del texto */
+    text-align: center;
+    /* Alineación del texto al centro */
+    margin-bottom: 20px;
+    /* Márgenes inferiores */
 }
 
-@keyframes cambioColorInfinito {
-    0%{
-        background-color: white;
-    }
-    10% {
-      background-color: rgb(234, 17, 17); /* Blanco */
-    }
-    20%{
-        background-color: blue;
-    }
-    50% {
-      background-color: #7f5a14; /* Naranja fuerte */
-    }
-    100% {
-      background-color: white; /* Vuelve a blanco para el bucle continuo */
-    }
-}
+
 
 /* Estilo para el botón */
 #btnInit {
-    padding: 15px 30px; /* Ajustado a un tamaño más grande */
-    font-size: 18px; /* Ajustado a un tamaño más grande */
-    color: #fff; /* Color del texto */
-    background-color: white; /* Color inicial (blanco) */
-    border: none; /* Sin borde */
-    cursor: pointer; /* Cursor de apuntador */
-    border-radius: 8px; /* Esquinas redondeadas */
-    animation: cambioColorInfinito 15s infinite; /* Aplicar la animación (5 segundos por ciclo) */
-    
+    font-size: 20px;
 }
 
-.container{
+.container {
     text-align: center;
 }
 
@@ -201,14 +187,20 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .contenedor {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
 }
+
 .copyright {
     color: #666;
     font-size: 14px;
     margin-top: 20px;
+}
+
+#searchSection{
+    margin-top: 200px;
 }

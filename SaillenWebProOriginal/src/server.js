@@ -271,29 +271,34 @@ app.get('/buscar', (req, res) => {
     });
 });
 
+app.route('/eliminar_ficha')
+  .get(async (req, res) => {
+    res.status(405).json({ error: 'Método no permitido' });
+  })
+  .delete(async (req, res) => {
+    const fichaId = req.query.ficha;
 
-app.delete("/eliminar_ficha", (req,res) => {
-    const ficha = req.query.ficha;
-    if(!ficha){
-        res.status(400).json({error: "Se requiere una ficha valida"})
-        return;
+    try {
+        const [rows] = await connection.execute('SELECT id_fichas FROM materiales WHERE id_fichas = ?', [fichaId]);
+
+        if (rows.length === 0) {
+            const deleteResult = await connection.execute('DELETE FROM fichas WHERE id = ?', [fichaId]);
+
+            if (deleteResult.affectedRows > 0) {
+                res.status(200).json({ message: 'Ficha eliminada correctamente' });
+            } else {
+                res.status(404).json({ error: 'La ficha no existe' });
+            }
+        } else {
+            res.status(400).json({ error: 'No se puede eliminar la ficha debido a dependencias en la tabla materiales' });
+        }
+    } catch (error) {
+        console.error('Error al eliminar la ficha:', error); // Imprimir el error en la consola
+        res.status(500).json({ error: 'Error interno del servidor' });
     }
-    const deleteQuery = "DELETE FROM fichas WHERE ficha = ?"
+  });
 
-    connection.query(deleteQuery, [ficha], (err, results) => {
-        if(err){
-            console.error("Error al eliminar la ficha: ", err);
-            res.status(500).json({error: "Error al eliminar la ficha de la base de datos"});
-            return;
-        }
 
-        if(results.affectedRows > 0){
-            res.json({message: "Ficha eliminada exitosamente" })
-        }else{
-            res.json({message: "La ficha no se encontro en la base"})
-        }
-    })
-})
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

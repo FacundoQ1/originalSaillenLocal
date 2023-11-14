@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchByMedidas = document.getElementById("searchByMedidas")
     const manosALaObra = document.getElementById("manosALaObra");
     const mensaje = document.getElementById("mensaje");
+    const borrarFichas = document.getElementById("borrarFichas");
 
     let fichaValue = "";
 
@@ -186,17 +187,18 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Debe ingresar una ficha o medidas para realizar la búsqueda.");
         }
     }
-
-
 });
+
+
 continueAction.addEventListener("click", () => {
     const reactorN21 = document.getElementById("reactorN21");
 
+    borrarFichas.style.display = "none";
+    selectedKey.style.display = "none";
     reactorN21.style.display = "block";
     data.style.display = "none";
     cantiDAD.style.display = "block";
     searchButton.style.display = "none";
-    fichaInput.style.display = "none";
     fechaInput.style.display = "none";
     clientesTo.style.display = "none";
     continueAction.style.display = "none";
@@ -406,7 +408,7 @@ saveMats.addEventListener("click", (event) => {
             .catch(error => console.error("error al guardar los materiales", error))
     });
     materialesForm.style.display = "none"
-});
+}); 
 const borrarFichas = document.getElementById("borrarFichas")
 const mostrarPseudo = document.getElementById("mostrarPseudo")
 const postgree = document.getElementById("postgree");
@@ -416,30 +418,27 @@ borrarFichas.addEventListener("click", () => {
     postgree.style.display = "none"
 });
 
-//borrar fichas no deseadas
-    const selectedKey = document.getElementById("selectedKey");
+// Borrar fichas no deseadas
+const selectedKey = document.getElementById("selectedKey");
 
     selectedKey.addEventListener("click", () => {
-        const fichaValue = document.getElementById("fichaInput").value
-        
-        if(fichaInput){
-            if(confirm("¿Estas seguro de que deseas eliminar esta ficha?")){
-                fetch(`http://localhost:300/eliminar_ficha?ficha=${fichaValue}`, {
-                    method: "DELETE",
+        const fichaValue = document.getElementById("fichaInputToDelete").value;
 
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                    if(data.message === "Ficha eliminada exitosamente"){
-                        alert("Ficha eliminada exitosamente");
-                    }else {
-                        alert("Error al eliminar la ficha");
-                    }
-                })
-                .catch((error) => console.error("Error al eliminar la ficha: ", error));
-            }
-        }else{
-            alert("Ingrese una ficha valida.")
+        console.log("Ficha Value:", fichaValue);
+
+        if (fichaValue) {
+            fetch(`http://localhost:3000/eliminar_ficha?ficha=${fichaValue}`, {
+                method: "DELETE",
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Server Response:", data);
+            })
+            .catch((error) => {
+                console.error("Error al procesar la respuesta del servidor: ", error);
+            });
+        } else {
+            console.warn("Ingrese una ficha válida."); // Muestra un mensaje en la consola del navegador
         }
     });
 
@@ -1172,7 +1171,6 @@ downloadButton.addEventListener("click", () => {
             </div>
         </div>
     </body>
-    
     </html>`)
 
     randomOrderNumber++;
