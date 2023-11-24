@@ -11,7 +11,6 @@
 
 <body>
     <h1 id="manosALaObra">Manos a la obra!</h1>
-    </div id="alinearPlanetas">
     <div id="postgree">
         <button id="createOrderButton">Crear orden de trabajo</button>
         <section id="searchSection">
@@ -25,23 +24,29 @@
             <div id="data" style="display: none;"></div>
             <button id="backSearchButton">Volver</button>
             <button id="continueAction">Siguente</button>
-            
+
             <div style="display: none;" id="reactorN21">
                 <h2 id="h2cantidad" style="display: none;">Ingrese la cantidad de piedras a crear </h2>
                 <input type="number" id="cantiDAD"
                     style="display: none; font-size: 12px; padding: 5px 10px; width: 220px;"
                     placeholder="Ingrese la cantidad de piedras a crear">
                 <button id="crearOrden" style="display: none;">Guardar los cambios</button>
-                <div id="mensaje" style="display: none;"><p>Ficha creada con exito! Puedes descargar la planilla.</p>
+            </div>
+
+            <div style="display: none;" id="reactorA210">
+                <p style="font-size: 17px;">Observaciones</p>
+                <input type="text" id="observacionesFicha">
+                <button id="enviarObser">Enviar</button>
+                <div id="mensaje" style="display: none;">
+                    <p>Ficha creada con exito! Puedes descargar la planilla.</p>
                     <button id="downloadButton" style="display: none;">Descargar</button>
                 </div>
             </div>
+
         </section>
-
-
         <button id="newFichaButton">Cargar ficha nueva</button>
-        <section id="newFichaForm">
-            <h2>Cargar Nueva Ficha</h2>
+
+        <div id="newFichaForm">
             <form id="fichaForm">
                 <label for="ficha">Ficha:</label>
                 <input type="number" id="ficha" name="ficha"><br><br>
@@ -86,26 +91,30 @@
                 <input type="text" id="tratamientoTermico" name="tratamientoTermico" style="display: none;"
                     placeholder="Tratamiento termico">
                 <button id="saveButton">Siguente</button>
+                <button id="backToTheEnd">Volver</button>
             </form>
-            <button id="backNewFichaButton">Volver</button>
-        </section>
-        <form id="materialesForm" style="display: none;">
-            <input type="text" id="materialesAlter1" placeholder="coloque el material">
-            <input type="text" id="materialesAlter2" placeholder="coloque el material">
-            <input type="text" id="materialesAlter3" placeholder="coloque el material">
-            <input type="text" id="materialesAlter4" placeholder="coloque el material">
-            <input type="text" id="materialesAlter5" placeholder="coloque el material">
-            <input type="text" id="materialesAlter6" placeholder="coloque el material">
-            <input type="text" id="materialesAlter7" placeholder="coloque el material">
-            <input type="text" id="materialesAlter8" placeholder="coloque el material">
-            <input type="text" id="materialesAlter9" placeholder="coloque el material">
-            <input type="text" id="materialesAlter10" placeholder="coloque el material">
-            <input type="text" id="materialesAlter11" placeholder="coloque el material">
-            <input type="text" id="materialesAlter12" placeholder="coloque el material">
-            <hr>
-            <button id="saveMats">Guardar</button>
-            <button id="backNewFichaButton">Cancelar</button>
-        </form>
+        </div>
+        <div id="materialesForm" style="display: none;">
+            <div class="centrarMateriales">
+                <h1 class="pelotudito">Materiales</h1>
+                <input type="text" id="materialesAlter1" placeholder="coloque el material">
+                <input type="text" id="materialesAlter2" placeholder="coloque el material">
+                <input type="text" id="materialesAlter3" placeholder="coloque el material">
+                <input type="text" id="materialesAlter4" placeholder="coloque el material">
+                <input type="text" id="materialesAlter5" placeholder="coloque el material">
+                <input type="text" id="materialesAlter6" placeholder="coloque el material">
+                <input type="text" id="materialesAlter7" placeholder="coloque el material">
+                <input type="text" id="materialesAlter8" placeholder="coloque el material">
+                <input type="text" id="materialesAlter9" placeholder="coloque el material">
+                <input type="text" id="materialesAlter10" placeholder="coloque el material">
+                <input type="text" id="materialesAlter11" placeholder="coloque el material">
+                <input type="text" id="materialesAlter12" placeholder="coloque el material">
+                <hr style="opacity: 0%;">
+                <button id="saveMats">Guardar</button>
+                <button id="backNewFichaButton">Volver</button>
+            </div>
+            
+        </div>
         <section id="proporcionesMATS" style="display: none;">
             <input type="number" step="any" id="proporcion1" placeholder="Coloque peso en grs">
             <input type="number" step="any" id="proporcion2" placeholder="Coloque peso en grs">
@@ -123,11 +132,12 @@
             <button id="backNewFichaButton">Volver</button>
         </section>
     </div>
-            <button id="borrarFichas">Borrar fichas</button>
-            <div style="display: none;" id="mostrarPseudo">
-                <input type="number" id="fichaInputToDelete" placeholder="Digite una ficha.">
-                <button id="selectedKey">Borrar!</button>
-            </div>
+    <button id="borrarFichas">Borrar fichas</button>
+    <div style="display: none;" id="mostrarPseudo">
+        <input type="number" id="fichaInputToDelete" placeholder="Digite una ficha.">
+        <button id="selectedKey">Borrar!</button>
+    </div>
     <script src="scripts.js"></script>
 </body>
+
 </html>

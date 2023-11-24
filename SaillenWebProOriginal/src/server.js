@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
     database: "saillen",
 });
 
-app.use(cors());
+app.use(cors());                
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 

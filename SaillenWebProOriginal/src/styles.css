@@ -101,6 +101,9 @@ section {
 #newFichaForm {
     display: none;
 }
+#newFichaForm{
+    padding: 40px;
+}
 
 #materialesForm {
     display: flex;
@@ -203,4 +206,26 @@ body {
 
 #searchSection{
     margin-top: 200px;
+}
+
+#proporcionesMATS {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#proporcionesMATS input,
+#proporcionesMATS button {
+    margin: 5px auto; /* Ajusta el margen vertical a 5px y el margen horizontal a automático */
+}
+
+.centrarMateriales{
+    margin-left: 400px;
+}
+
+.pelotudito {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    margin-left: -300px;
 }

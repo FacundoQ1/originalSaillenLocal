@@ -2,6 +2,8 @@ let cantidadesNecesariasGlobal = {};
 let printData = {}; // Datos para impresión
 let randomOrderNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
 cantidadEspeficicada = {}
+cantidadBruta = {};
+observaciones = {};
 document.addEventListener("DOMContentLoaded", () => {
     const postgree = document.getElementById("postgree");
     const createOrderButton = document.getElementById("createOrderButton");
@@ -39,6 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const manosALaObra = document.getElementById("manosALaObra");
     const mensaje = document.getElementById("mensaje");
     const borrarFichas = document.getElementById("borrarFichas");
+    const backToTheEnd = document.getElementById("backToTheEnd");
+    const reactorA210 = document.getElementById("reactorA210")
+
 
     let fichaValue = "";
 
@@ -49,13 +54,16 @@ document.addEventListener("DOMContentLoaded", () => {
         searchSection.style.display = "block";
         newFichaForm.style.display = "none";
         manosALaObra.style.display = "none";
+        borrarFichas.style.display = "none";
     });
     newFichaButton.addEventListener("click", () => {
         newFichaButton.style.display = "none";
-        createOrderButton.style.display = "block";
+        createOrderButton.style.display = "none";
         newFichaForm.style.display = "block";
         searchSection.style.display = "none";
         manosALaObra.style.display = "none";
+        borrarFichas.style.display = "none";
+        backNewFichaButton.style.display = "none";
     });
     backSearchButton.addEventListener("click", function () {
         window.location.reload();
@@ -63,6 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
     backNewFichaButton.addEventListener("click", function () {
         window.location.reload()
     });
+    backToTheEnd.addEventListener("click", () => {
+        window.location.reload();
+    })
     const searchButton = document.getElementById("searchButton");
     searchButton.addEventListener("click", () => {
         const fichainput = document.getElementById("fichaInput").value;
@@ -106,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         for (let i = 1; i <= 12; i++) {
                             const materialKey = `materialesAlter${i}`;
                             const materialValue = item[materialKey];
-                            if (materialValue !== "" && materialValue !== "no") {
+                            if (materialValue !== "" && materialValue !== "no" && materialValue !== null) {
                                 divElement.innerHTML += `<li class='data-list-item'>Material ${i}: ${materialValue}</li>`;
                             }
                         }
@@ -117,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         for (let i = 1; i <= 12; i++) {
                             const proporcionKey = `proporcion${i}`;
                             const proporcionValue = item[proporcionKey];
-                            if (proporcionValue !== 0 && proporcionValue !== "") {
+                            if (proporcionValue !== "null" && proporcionValue !== null && proporcionValue !== 0) {
                                 divElement.innerHTML += `<li class='data-list-item'>Proporción ${i}: ${proporcionValue}</li>`;
                             }
                         }
@@ -139,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
         searchByMedidas.style.display = "none";
         searchButton.style.display = "none";
     });
-
     searchByMedidas.addEventListener("click", () => {
         searchByMedidas.style.display = "none";
         medidasInput.style.display = "block";
@@ -151,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
         newFichaButton.style.display = "none";
         newFichaForm.style.display = "none";
         manosALaObra.style.display = "none";
+        borrarFichas.style.display = "none";
     })
 
     function functionSearchByMedidas() {
@@ -192,7 +203,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 continueAction.addEventListener("click", () => {
     const reactorN21 = document.getElementById("reactorN21");
-
     borrarFichas.style.display = "none";
     selectedKey.style.display = "none";
     reactorN21.style.display = "block";
@@ -206,7 +216,7 @@ continueAction.addEventListener("click", () => {
     newFichaForm.style.display = "none";
     crearOrden.style.display = "block";
     manosALaObra.style.display = "none";
-
+    borrarFichas.style.display = "none";
 });
 //cantidades//
 
@@ -241,10 +251,11 @@ crearOrden.addEventListener("click", () => {
                     // Almacenar la cantidad necesaria en el objeto "cantidadesObject"
                     cantidadesObject[`Material${i}`] = cantidadNecesaria;
                 }
+                // Agregar la cantidad deseada al objeto
+                cantidadBruta['CantidadDeseada'] = cantidadDeseada;
+
                 // Asignar el objeto a la variable global
                 cantidadesNecesariasGlobal = cantidadesObject;
-                mensaje.style.display = "block";
-                downloadButton.style.display = "block";
 
             } else {
                 alert("Ocurrio un problema")
@@ -252,6 +263,8 @@ crearOrden.addEventListener("click", () => {
         })
         .catch(error => console.error("Error al obtener los datos:", error));
     cantidadEspeficicada = cantidadDeseada.value
+    reactorN21.style.display = "none";
+    reactorA210.style.display = "block";
 });
 
 const saveButton = document.getElementById("saveButton");
@@ -408,39 +421,49 @@ saveMats.addEventListener("click", (event) => {
             .catch(error => console.error("error al guardar los materiales", error))
     });
     materialesForm.style.display = "none"
-}); 
-const borrarFichas = document.getElementById("borrarFichas")
-const mostrarPseudo = document.getElementById("mostrarPseudo")
-const postgree = document.getElementById("postgree");
+});
+// const borrarFichas = document.getElementById("borrarFichas")
+// const mostrarPseudo = document.getElementById("mostrarPseudo")
+// const postgree = document.getElementById("postgree");
 
-borrarFichas.addEventListener("click", () => {
-    mostrarPseudo.style.display = "block";
-    postgree.style.display = "none"
+// borrarFichas.addEventListener("click", () => {
+//     mostrarPseudo.style.display = "block";
+//     postgree.style.display = "none"
+// });
+
+// // Borrar fichas no deseadas
+// const selectedKey = document.getElementById("selectedKey");
+
+//     selectedKey.addEventListener("click", () => {
+//         const fichaValue = document.getElementById("fichaInputToDelete").value;
+
+//         console.log("Ficha Value:", fichaValue);
+
+//         if (fichaValue) {
+//             fetch(`http://localhost:3000/eliminar_ficha?ficha=${fichaValue}`, {
+//                 method: "DELETE",
+//             })
+//             .then((response) => response.json())
+//             .then((data) => {
+//                 console.log("Server Response:", data);
+//             })
+//             .catch((error) => {
+//                 console.error("Error al procesar la respuesta del servidor: ", error);
+//             });
+//         } else {
+//             console.warn("Ingrese una ficha válida."); // Muestra un mensaje en la consola del navegador
+//         }
+//     });
+const enviarObser = document.getElementById("enviarObser")
+
+enviarObser.addEventListener("click", () => {
+    const observacionesFicha = document.getElementById("observacionesFicha").value;
+    observaciones['ObservacionesFicha'] = observacionesFicha;
+    mensaje.style.display = "block";
+    downloadButton.style.display = "block";
 });
 
-// Borrar fichas no deseadas
-const selectedKey = document.getElementById("selectedKey");
 
-    selectedKey.addEventListener("click", () => {
-        const fichaValue = document.getElementById("fichaInputToDelete").value;
-
-        console.log("Ficha Value:", fichaValue);
-
-        if (fichaValue) {
-            fetch(`http://localhost:3000/eliminar_ficha?ficha=${fichaValue}`, {
-                method: "DELETE",
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Server Response:", data);
-            })
-            .catch((error) => {
-                console.error("Error al procesar la respuesta del servidor: ", error);
-            });
-        } else {
-            console.warn("Ingrese una ficha válida."); // Muestra un mensaje en la consola del navegador
-        }
-    });
 
 ifEscotes.addEventListener("click", () => {
     event.preventDefault();
@@ -487,6 +510,7 @@ downloadButton.addEventListener("click", () => {
     printWindow.document.open();
     printWindow.document.write(`<!DOCTYPE html>
     <html lang="es">
+    
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -499,14 +523,14 @@ downloadButton.addEventListener("click", () => {
                 background-color: #f0f0f0;
             }
     
-            .print-header {
-                text-align: center;
+            #contenedor-principal {
+                border: 1px solid #000;
+                /* Línea del recuadro */
                 padding: 20px;
-                background-color: #f0f0f0;
-                border-bottom: 2px solid #333;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+                /* Espaciado dentro del recuadro */
+                margin: 20px;
+                /* Márgenes alrededor del recuadro */
+             
             }
     
             .order-sheet {
@@ -514,22 +538,7 @@ downloadButton.addEventListener("click", () => {
                 margin: auto;
                 padding: 20px;
                 border: 1px solid #ccc;
-                width: 80%;
-            }
-    
-            .header {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 20px;
-            }
-    
-            .header h1,
-            .order-info h2 {
-                margin: 0;
-            }
-    
-            .dates p {
-                margin: 5px 0;
+                width: 100%;
             }
     
             .recuadro {
@@ -539,35 +548,6 @@ downloadButton.addEventListener("click", () => {
                 border: 1px solid #ccc;
                 margin: 10px;
                 padding: 10px;
-            }
-    
-            .recuadro>div {
-                flex: 1;
-                margin: 5px;
-            }
-    
-            .recuadro h2 {
-                margin-top: 0;
-                font-size: 18px;
-            }
-    
-            .recuadro2 {
-                display: flex;
-                flex-wrap: wrap;
-                background-color: #f0f0f0;
-                border: 1px solid #ccc;
-                margin: 10px;
-                padding: 10px;
-            }
-    
-            .recuadro2>div {
-                flex: 1;
-                margin: 5px;
-            }
-    
-            .recuadro2 h2 {
-                margin-top: 0;
-                font-size: 18px;
             }
     
             /* Estilos para la sección de materiales */
@@ -612,13 +592,6 @@ downloadButton.addEventListener("click", () => {
                 margin-bottom: 10px;
                 font-size: 16px;
                 color: #333;
-            }
-    
-            #large1,
-            #tallest1,
-            #broad {
-                display: flex;
-                margin: 0 auto;
             }
     
             #escotes2 {
@@ -802,271 +775,396 @@ downloadButton.addEventListener("click", () => {
                 margin-top: 19px;
                 margin-left: 124px;
             }
-            .recuadroRO-small {
-        border: 1px solid #000;
-        padding: 10px;
-        background-color: #f0f0f0;
-        font-size: 14px; /* Tamaño de fuente más pequeño */
-        width: 50%; /* Puedes ajustar el ancho según tus necesidades */
-        margin: 10px;
-    }
+    
+            hr {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+    
+            .numeroOrden {
+                margin-left: auto;
+            }
+    
+            .dates {
+                display: flex;
+            }
+    
+            .dates p {
+                margin-right: 10px;
+            }
+    
+            .ficha {
+                display: flex;
+            }
+    
+            .ficha {
+                margin-right: 10px;
+            }
+    
+            .cuadrito {
+                display: flex;
+                flex-wrap: wrap;
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                margin: 10px;
+                padding: 10px;
+                width: 250px;
+                opacity: 0%;
+            }
+    
+            .centrar-contenido {
+                text-align: center;
+            }
+    
+            .cuadradoParaEscotes {
+                border: 1px solid #000;
+                padding: 10px;
+                width: 200px;
+                margin: 10px auto;
+                /* Esto debería centrar el bloque horizontalmente */
+            }
+            .cuadritos{
+                display: flex;
+                flex-wrap: wrap;
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                margin: 10px;
+                padding: 10px;
+                width: 150px;
+                opacity: 0%;
+            }
+            .cuadrin{
+                display: flex;
+                flex-wrap: wrap;
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                margin: 10px;
+                padding: 10px;
+                width: 50px;
+                opacity: 0%;
+            }
+            .cuadradaso{
+                display: flex;
+                background-color: #f0f0f0;
+                border: 1px solid #000000;
+                margin: 10px;
+                padding: 10px;
+                width: 120px;
+                height: 60px;
+            }
         </style>
     </head>
     
     <body>
-        <div class="print-header">
-            <div class="order-sheet">
-                <div class="header">
-                    <div class="company-info">
-                        <h1>SAILLEN ABRASIVOS S.R.L</h1>
-                        <p>Numero: ${randomOrderNumber}</p>
-                        <p>BV DE LOS RUSOS 2895</p>
-                    </div>
-                    <div class="order-info">
-                        <h2>ORDEN DE TRABAJO</h2>
-                    </div>
+        <div id="contenedor-principal">
+            <div class="recuadro">
+                <div>
+                    <h1>SAILLEN ABRASIVOS S.R.L</h1>
+                    <p>BV DE LOS RUSOS 2895</p>
                 </div>
+                <div class="numeroOrden">
+                    <h2>ORDEN DE TRABAJO</h2>
+                    <p>Numero:${randomOrderNumber}</p>
+                </div>
+                <hr>
                 <div class="dates">
                     <p>Fecha: ${printData.fecha}</p>
                     <p>Cliente: ${printData.clientesTo}</p>
                 </div>
                 <hr>
-                <div class="recuadro">
-                    <div class="ficha">
-                        <p>Ficha: ${printData.ficha}</p>
-                    </div>
-                    <div class="tiposgg">
+                <div class="ficha">
+                    <p>Ficha: ${printData.ficha}</p>
+                    <div>
                         <p>Tipo: ${printData.tipo}</p>
                         <p>Características: ${printData.caracteristicas}</p>
                         <p>Medida: ${printData.medidas}</p>
                     </div>
-                    <div class="pandp">
-                        <p>Nro Prensa: ${printData.prensa}</p>
-                        <p>Presión: ${printData.presion}</p>
-                    </div>
-                    <div class="pesoshxr">
-                        <p>Peso piso: ${printData.pesoPiso}</p>
-                        <p>Peso Pared: ${printData.pesoPared}</p>
-                        <p>Peso Total: ${printData.pesoTotal}</p>
+                    <div class="cuadrito">
+    
                     </div>
     
                 </div>
-    
-                <div class="recuadroRO-small">
-                    <h2 id="herramentalSUPP">Herramental</h2>
-                    <div class="aguilaCalva"></div>
-                    <div class="diametroDeRecorte">
-                        <p id="escotes2">Diametro recorte: ${printData.diametroRecorte}|
-                            escotes 1: ${printData.escotes1}|
-                            escotes 2: ${printData.escotes2}
-                        </p>
+                <div class="pandp">
+                    <p>Nro Prensa: ${printData.prensa}</p>
+                    <p>Presión: ${printData.presion}</p>
+                </div>
+                <div class="cuadrin"></div>
+                <div class="pesoshxr">
+                    <p>Peso piso: ${printData.pesoPiso}</p>
+                    <p>Peso Pared: ${printData.pesoPared}</p>
+                    <p>Peso Total: ${printData.pesoTotal}</p>
+                </div>
+                <div class="cuadrito">
+                </div>
+                <div>
+                    <p>Cantidad</p>
+                <div class="cuadradaso">
+                        <p style="font-size: 20px;">${cantidadBruta.CantidadDeseada}</p>
+                </div>
+            </div>
+                <hr>
+                <div>
+                    <p id="tallest1">Altura: ${printData.altura}</p>
+                    <p id="broad">Ancho: ${printData.ancho}</p>
+                    <p id="large1">Largo: ${printData.largo}</p>
+                </div>
+                <div class="cuadritos"></div>
+                <div class="centrar-contenido">
+                    <h2>Herramental</h2>
+                    <p>escotes</p>
+                    <p>Peso recorte: ${printData.pesoRecorte}</p>
+                    <div class="cuadradoParaEscotes">
+                        <p>1º: ${printData.escotes1}</p>
+                        <p>2º: ${printData.escotes2}</p>
                     </div>
+                </div>
+                <div class="cuadrito"></div>
+                <div>
                     <p>Buje: ${printData.buje}</p>
                     <p>Codigo: ${printData.CODIGO}</p>
-                    <p>Peso recorte: ${printData.pesoRecorte}</p>
+                    
                     <p>Tratamiento termico: ${printData.tratamientoTermico}</p>
-                    <div class="vertical">
-                        <p id="tallest1">Altura: ${printData.altura}</p>
-                        <p id="broad">Ancho: ${printData.ancho}</p>
-                        <p id="large1">Largo: ${printData.largo}</p>
-                    </div>
                 </div>
+                <!-- <div>
+                        <p>Buje: ${printData.buje}</p>
+                        <p>Codigo: ${printData.CODIGO}</p>
+                        <p>Peso recorte: ${printData.pesoRecorte}</p>
+                        <p>Tratamiento termico: ${printData.tratamientoTermico}</p>
+                    </div>
+                </div> -->
+                <hr>
+                <div class="expediciones">
+                <p>OBS ${observaciones.ObservacionesFicha}</p>
+                    <h3>EXPEDICION</h3>
+                    <div class="cuadrito">
     
+                    </div>
+                    <section id="rectificadoPeriferia">
     
-                <section id="seccionEtiquetado">
-                    <p id="etiquetado">Etiquetado</p>
-                    <div class="cuadrado">
-                        <div class="linea">
-                            <div class="linea-horizontal">
-                                <div>
+                        <div class="cuadrado">
+                            <div class="linea">
+                                <div class="linea-horizontal">
                                     <div class="linea2">
                                         <div class="lineaVerticalMalEducada"></div>
                                     </div>
                                 </div>
-    
+                            </div>
+                            <p class="textDerecho">Inicio:_ /_</p>
+                            <p class="textDerecho">Fin:_ /_</p>
+                            <p class="horaSegunda">Hora:_ /_</p>
+                            <div>
+                                <p class="horaPrimera">Hora:_ /_</p>
+                            </div>
+                            <div>
+                                <p class="operatorSide">Operario</p>
+                            </div>
+                            <div>
+                                <p class="cantidadNoSeVe">CANT</p>
+                            </div>
+                            <div>
+                                <p class="scraps">SCRAPS</p>
                             </div>
                         </div>
-                        <p class="fechaInicioEtiquetado"">Inicio:_ /_</p>
-                        <p class=" fechaInicioEtiquetado">Fin:_ /_</p>
-                        <p class="textHora">Hora:_ /_</p>
-                        <p class="textHora">Hora:_ /_</p>
-                        <div>
-                            <p class="operator">Operario</p>
-                        </div>
-                        <div>
-                            <p class="cantidadNoSeVe">CANT</p>
-                        </div>
-                        <div>
-                            <p class="scraps">SCRAPS</p>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
     
-                <section id="rectificadoPeriferia">
-                    <p>Rectificado periferia</p>
-                    <div class="cuadrado">
-                        <div class="linea">
-                            <div class="linea-horizontal">
+    
+            </div>
+            <section id="seccionEtiquetado">
+                <p id="etiquetado">Etiquetado</p>
+                <div class="cuadrado">
+                    <div class="linea">
+                        <div class="linea-horizontal">
+                            <div>
                                 <div class="linea2">
                                     <div class="lineaVerticalMalEducada"></div>
                                 </div>
                             </div>
-                        </div>
-                        <p class="textDerecho">Inicio:_ /_</p>
-                        <p class="textDerecho">Fin:_ /_</p>
-                        <p class="horaSegunda">Hora:_ /_</p>
-                        <div>
-                            <p class="horaPrimera">Hora:_ /_</p>
-                        </div>
-                        <div>
-                            <p class="operatorSide">Operario</p>
-                        </div>
-                        <div>
-                            <p class="cantidadNoSeVe">CANT</p>
-                        </div>
-                        <div>
-                            <p class="scraps">SCRAPS</p>
+    
                         </div>
                     </div>
-                </section>
-                <section id="embujado">
-                    <p>embujado</p>
-                    <div class="cuadrado">
-                        <div class="linea">
-                            <div class="linea-horizontal">
-                                <div class="linea2">
-                                    <div class="lineaVerticalMalEducada"></div>
-                                </div>
+                    <p class="fechaInicioEtiquetado"">Inicio:_ /_</p>
+                            <p class=" fechaInicioEtiquetado">Fin:_ /_</p>
+                    <p class="textHora">Hora:_ /_</p>
+                    <p class="textHora">Hora:_ /_</p>
+                    <div>
+                        <p class="operator">Operario</p>
+                    </div>
+                    <div>
+                        <p class="cantidadNoSeVe">CANT</p>
+                    </div>
+                    <div>
+                        <p class="scraps">SCRAPS</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section id="rectificadoPeriferia">
+                <p>Rectificado periferia</p>
+                <div class="cuadrado">
+                    <div class="linea">
+                        <div class="linea-horizontal">
+                            <div class="linea2">
+                                <div class="lineaVerticalMalEducada"></div>
                             </div>
                         </div>
-                        <p class="fechaInicioEtiquetado"">Inicio:_ /_</p>
-                        <p class=" fechaInicioEtiquetado">Fin:_ /_</p>
-                        <p class="textHora">Hora:_ /_</p>
-                        <p class="textHora">Hora:_ /_</p>
-                        <div>
-                            <p class="operator">Operario</p>
-                        </div>
-                        <div>
-                            <p class="cantidadNoSeVe">CANT</p>
-                        </div>
-                        <div>
-                            <p class="scraps">SCRAPS</p>
-                        </div>
                     </div>
-                </section>
-    
-                <section id="rectificadoBujeYEscote">
-                    <p>Rectificado buje y escote</p>
-                    <div class="cuadrado">
-                        <div class="linea">
-                            <div class="linea-horizontal">
-                                <div class="linea2">
-                                    <div class="lineaVerticalMalEducada"></div>
-                                </div>
+                    <p class="textDerecho">Inicio:_ /_</p>
+                    <p class="textDerecho">Fin:_ /_</p>
+                    <p class="horaSegunda">Hora:_ /_</p>
+                    <div>
+                        <p class="horaPrimera">Hora:_ /_</p>
+                    </div>
+                    <div>
+                        <p class="operatorSide">Operario</p>
+                    </div>
+                    <div>
+                        <p class="cantidadNoSeVe">CANT</p>
+                    </div>
+                    <div>
+                        <p class="scraps">SCRAPS</p>
+                    </div>
+                </div>
+            </section>
+            <section id="embujado">
+                <p>embujado</p>
+                <div class="cuadrado">
+                    <div class="linea">
+                        <div class="linea-horizontal">
+                            <div class="linea2">
+                                <div class="lineaVerticalMalEducada"></div>
                             </div>
                         </div>
-                        <p class="textDerecho">Inicio:_ /_</p>
-                        <p class="textDerecho">Fin:_ /_</p>
-                        <p class="horaSegunda">Hora:_ /_</p>
-                        <div>
-                            <p class="horaPrimera">Hora:_ /_</p>
-                        </div>
-                        <div>
-                            <p class="operator">Operario</p>
-                        </div>
-                        <div>
-                            <p class="cantidadNoSeVe">CANT</p>
-                        </div>
-                        <div>
-                            <p class="scraps">SCRAPS</p>
-                        </div>
                     </div>
-                </section>
+                    <p class="fechaInicioEtiquetado"">Inicio:_ /_</p>
+                            <p class=" fechaInicioEtiquetado">Fin:_ /_</p>
+                    <p class="textHora">Hora:_ /_</p>
+                    <p class="textHora">Hora:_ /_</p>
+                    <div>
+                        <p class="operator">Operario</p>
+                    </div>
+                    <div>
+                        <p class="cantidadNoSeVe">CANT</p>
+                    </div>
+                    <div>
+                        <p class="scraps">SCRAPS</p>
+                    </div>
+                </div>
+            </section>
     
-                <section id="rectificadoPlano">
-                    <p>Rectificado plano</p>
-                    <div class="cuadrado">
-                        <div class="linea">
-                            <div class="linea-horizontal">
-                                <div class="linea2">
-                                    <div class="lineaVerticalMalEducada"></div>
-                                </div>
+            <section id="rectificadoBujeYEscote">
+                <p>Rectificado buje y escote</p>
+                <div class="cuadrado">
+                    <div class="linea">
+                        <div class="linea-horizontal">
+                            <div class="linea2">
+                                <div class="lineaVerticalMalEducada"></div>
                             </div>
                         </div>
-                        <p class="fechaInicioEtiquetado"">Inicio:_ /_</p>
-                        <p class=" fechaInicioEtiquetado">Fin:_ /_</p>
-                        <p class="textHora">Hora:_ /_</p>
-                        <p class="textHora">Hora:_ /_</p>
-                        <div>
-                            <p class="operator">Operario</p>
-                        </div>
-                        <div>
-                            <p class="cantidadNoSeVe">CANT</p>
-                        </div>
-                        <div>
-                            <p class="scraps">SCRAPS</p>
-                        </div>
                     </div>
-                </section>
+                    <p class="textDerecho">Inicio:_ /_</p>
+                    <p class="textDerecho">Fin:_ /_</p>
+                    <p class="horaSegunda">Hora:_ /_</p>
+                    <div>
+                        <p class="horaPrimera">Hora:_ /_</p>
+                    </div>
+                    <div>
+                        <p class="operator">Operario</p>
+                    </div>
+                    <div>
+                        <p class="cantidadNoSeVe">CANT</p>
+                    </div>
+                    <div>
+                        <p class="scraps">SCRAPS</p>
+                    </div>
+                </div>
+            </section>
     
-                <section id="horneadoPPSS">
-                    <p>Horneado (por planilla de stock en secado)</p>
-                    <div class="cuadrado">
-                        <div class="linea">
-                            <div class="linea-horizontal">
-                                <div class="linea2">
-                                    <div class="lineaVerticalMalEducada"></div>
-                                </div>
+            <section id="rectificadoPlano">
+                <p>Rectificado plano</p>
+                <div class="cuadrado">
+                    <div class="linea">
+                        <div class="linea-horizontal">
+                            <div class="linea2">
+                                <div class="lineaVerticalMalEducada"></div>
                             </div>
                         </div>
-                        <p class="textDerecho">Inicio:_ /_</p>
-                        <p class="textDerecho">Fin:_ /_</p>
-                        <p class="horaSegunda">Hora:_ /_</p>
-                        <div>
-                            <p class="horaPrimera">Hora:_ /_</p>
-                        </div>
-                        <div>
-                            <p class="operator">Operario</p>
-                        </div>
-                        <div>
-                            <p class="cantidadNoSeVe">CANT</p>
-                        </div>
-                        <div>
-                            <p class="scraps">SCRAPS</p>
-                        </div>
                     </div>
-                </section>
-                <section>
-                    <div class="cuadrado">
-                        <div class="linea">
-                            <div class="linea-horizontal">
-                                <div class="linea2">
-                                    <div class="lineaVerticalMalEducada"></div>
-                                </div>
+                    <p class="fechaInicioEtiquetado"">Inicio:_ /_</p>
+                            <p class=" fechaInicioEtiquetado">Fin:_ /_</p>
+                    <p class="textHora">Hora:_ /_</p>
+                    <p class="textHora">Hora:_ /_</p>
+                    <div>
+                        <p class="operator">Operario</p>
+                    </div>
+                    <div>
+                        <p class="cantidadNoSeVe">CANT</p>
+                    </div>
+                    <div>
+                        <p class="scraps">SCRAPS</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section id="horneadoPPSS">
+                <p>Horneado (por planilla de stock en secado)</p>
+                <div class="cuadrado">
+                    <div class="linea">
+                        <div class="linea-horizontal">
+                            <div class="linea2">
+                                <div class="lineaVerticalMalEducada"></div>
                             </div>
                         </div>
-                        <p class="textDerecho">Inicio:_ /_</p>
-                        <p class="textDerecho">Fin:_ /_</p>
-                        <p class="horaSegunda">Hora:_ /_</p>
-                        <div>
-                            <p class="horaPrimera">Hora:_ /_</p>
-                        </div>
-                        <div>
-                            <p class="operator">Operario</p>
-                        </div>
-                        <div>
-                            <p class="cantidadNoSeVe">CANT</p>
-                        </div>
-                        <div>
-                            <p class="scraps">SCRAPS</p>
+                    </div>
+                    <p class="textDerecho">Inicio:_ /_</p>
+                    <p class="textDerecho">Fin:_ /_</p>
+                    <p class="horaSegunda">Hora:_ /_</p>
+                    <div>
+                        <p class="horaPrimera">Hora:_ /_</p>
+                    </div>
+                    <div>
+                        <p class="operator">Operario</p>
+                    </div>
+                    <div>
+                        <p class="cantidadNoSeVe">CANT</p>
+                    </div>
+                    <div>
+                        <p class="scraps">SCRAPS</p>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="cuadrado">
+                    <div class="linea">
+                        <div class="linea-horizontal">
+                            <div class="linea2">
+                                <div class="lineaVerticalMalEducada"></div>
+                            </div>
                         </div>
                     </div>
-                </section>
+                    <p class="textDerecho">Inicio:_ /_</p>
+                    <p class="textDerecho">Fin:_ /_</p>
+                    <p class="horaSegunda">Hora:_ /_</p>
+                    <div>
+                        <p class="horaPrimera">Hora:_ /_</p>
+                    </div>
+                    <div>
+                        <p class="operator">Operario</p>
+                    </div>
+                    <div>
+                        <p class="cantidadNoSeVe">CANT</p>
+                    </div>
+                    <div>
+                        <p class="scraps">SCRAPS</p>
+                    </div>
+                </div>
+            </section>
     
     
-                <h3>Proporciones y Materiales</h3>
+            <h3>Proporciones y Materiales</h3>
     
-                <table>
+            <table>
                 <tr>
                     <th>Proporción unitaria</th>
                     <th>Proporcion por cantidad</th>
@@ -1168,9 +1266,9 @@ downloadButton.addEventListener("click", () => {
                     <td>${printData.materialesAlter12 !== 'no' ? printData.materialesAlter12 : ''}</td>
                 </tr>
             </table>
-            </div>
         </div>
     </body>
+    
     </html>`)
 
     randomOrderNumber++;
