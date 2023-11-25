@@ -422,38 +422,45 @@ saveMats.addEventListener("click", (event) => {
     });
     materialesForm.style.display = "none"
 });
-// const borrarFichas = document.getElementById("borrarFichas")
-// const mostrarPseudo = document.getElementById("mostrarPseudo")
-// const postgree = document.getElementById("postgree");
 
-// borrarFichas.addEventListener("click", () => {
-//     mostrarPseudo.style.display = "block";
-//     postgree.style.display = "none"
-// });
+const borrarFichas = document.getElementById("borrarFichas")
+const mostrarPseudo = document.getElementById("mostrarPseudo")
+const postgree = document.getElementById("postgree");
 
-// // Borrar fichas no deseadas
-// const selectedKey = document.getElementById("selectedKey");
+borrarFichas.addEventListener("click", () => {
+    mostrarPseudo.style.display = "block";
+    postgree.style.display = "none"
+});
 
-//     selectedKey.addEventListener("click", () => {
-//         const fichaValue = document.getElementById("fichaInputToDelete").value;
+const selectedKey = document.getElementById("selectedKey");
 
-//         console.log("Ficha Value:", fichaValue);
+selectedKey.addEventListener("click", () => {
+    const fichaValue = document.getElementById("fichaInputToDelete").value;
 
-//         if (fichaValue) {
-//             fetch(`http://localhost:3000/eliminar_ficha?ficha=${fichaValue}`, {
-//                 method: "DELETE",
-//             })
-//             .then((response) => response.json())
-//             .then((data) => {
-//                 console.log("Server Response:", data);
-//             })
-//             .catch((error) => {
-//                 console.error("Error al procesar la respuesta del servidor: ", error);
-//             });
-//         } else {
-//             console.warn("Ingrese una ficha válida."); // Muestra un mensaje en la consola del navegador
-//         }
-//     });
+    console.log("Ficha Value:", fichaValue);
+
+    if (fichaValue) {
+        fetch(`http://localhost:3000/eliminar_ficha?ficha=${fichaValue}`, {
+            method: "DELETE",
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error en la solicitud DELETE');
+            }
+        })
+        .then((data) => {
+            console.log("Server Response:", data);
+        })
+        .catch((error) => {
+            console.error("Error al procesar la respuesta del servidor: ", error);
+        });
+    } else {
+        console.warn("Ingrese una ficha válida."); // Muestra un mensaje en la consola del navegador
+    }
+});
+
 const enviarObser = document.getElementById("enviarObser")
 
 enviarObser.addEventListener("click", () => {
@@ -470,12 +477,14 @@ ifEscotes.addEventListener("click", () => {
     escote1.style.display = "block";
     buttonAddEscote.style.display = "block";
     ifEscotes.style.display = "none";
+    diametroRecorte.style.display = "block";
 });
 
 buttonAddEscote.addEventListener("click", () => {
     event.preventDefault();
     escote2.style.display = "block";
     buttonAddEscote.style.display = "none";
+    
 })
 ifBuje.addEventListener("click", () => {
     event.preventDefault();
@@ -489,7 +498,6 @@ ifCodigo.addEventListener("click", () => {
 })
 ifPesoRecorte.addEventListener("click", () => {
     event.preventDefault();
-    diametroRecorte.style.display = "block";
     pesoRecorte.style.display = "block";
     ifPesoRecorte.style.display = "none";
 })
@@ -853,6 +861,16 @@ downloadButton.addEventListener("click", () => {
                 width: 120px;
                 height: 60px;
             }
+            .cuadraditoti{
+                display: flex;
+                background-color: #f0f0f0;
+                border: 1px solid #000000;
+                margin: 10px;
+                padding: 10px;
+                width: 10px;
+                height: 9px;
+                opacity: 0%;
+            }
         </style>
     </head>
     
@@ -875,6 +893,7 @@ downloadButton.addEventListener("click", () => {
                 <hr>
                 <div class="ficha">
                     <p>Ficha: ${printData.ficha}</p>
+                    <div class="cuadraditoti"></div>
                     <div>
                         <p>Tipo: ${printData.tipo}</p>
                         <p>Características: ${printData.caracteristicas}</p>

@@ -271,34 +271,20 @@ app.get('/buscar', (req, res) => {
     });
 });
 
-app.route('/eliminar_ficha')
-  .get(async (req, res) => {
-    res.status(405).json({ error: 'Método no permitido' });
-  })
-  .delete(async (req, res) => {
-    const fichaId = req.query.ficha;
-
-    try {
-        const [rows] = await connection.execute('SELECT id_fichas FROM materiales WHERE id_fichas = ?', [fichaId]);
-
-        if (rows.length === 0) {
-            const deleteResult = await connection.execute('DELETE FROM fichas WHERE id = ?', [fichaId]);
-
-            if (deleteResult.affectedRows > 0) {
-                res.status(200).json({ message: 'Ficha eliminada correctamente' });
-            } else {
-                res.status(404).json({ error: 'La ficha no existe' });
-            }
-        } else {
-            res.status(400).json({ error: 'No se puede eliminar la ficha debido a dependencias en la tabla materiales' });
-        }
-    } catch (error) {
-        console.error('Error al eliminar la ficha:', error); // Imprimir el error en la consola
+app.delete('/eliminar_ficha', (req, res) => {
+    const idFicha = req.query.fichas;
+  
+    // Realizar la eliminación en la tabla fichas
+    const query = `DELETE FROM fichas WHERE id = ${idFicha}`;
+    connection.query(query, (error, results) => {
+      if (error) {
+        console.error(error); // Imprime el error en la consola del servidor
         res.status(500).json({ error: 'Error interno del servidor' });
-    }
+      } else {
+        res.status(200).json({ message: 'Ficha y registros relacionados eliminados con éxito.' });
+      }
+    });
   });
-
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

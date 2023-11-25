@@ -143,7 +143,7 @@ section {
 
 
 body {
-    background-image: url(/templates/nuevo_icon.SVG.png);
+    background-image: url(nuevo_icon.SVG.png);
     background-size: 35%;
     /* Cambiado a "cover" para ajustar la imagen a todo el fondo */
     background-repeat: no-repeat;
